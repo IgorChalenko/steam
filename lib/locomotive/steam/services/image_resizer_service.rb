@@ -5,11 +5,11 @@ module Locomotive
 
       attr_accessor_initialize :resizer, :asset_path
 
-      def resize(source, geometry, convert = "")
+      def resize(source, geometry, format, convert = "")
         return get_url_or_path(source) if disabled? || geometry.blank?
 
         if file = fetch_file(source)
-          transformed_file = file.thumb(geometry)
+          transformed_file = file.thumb(geometry, format: format)
           transformed_file = transformed_file.convert(convert) if !convert.blank?
           transformed_file.url
         else

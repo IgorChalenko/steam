@@ -14,6 +14,7 @@ module Locomotive
           def resize(input, resize_string, *args)
             args ||= {}
             options = []
+            convert_to = nil
 
             args.flatten.each do |arg|
               arg.each do |k, v|
@@ -30,13 +31,15 @@ module Locomotive
                   "-interlace Plane" if v
                 when :filters
                   v
+                when :to_format
+                  convert_to = v
                 else
                   next
                 end
               end
             end
 
-            @context.registers[:services].image_resizer.resize(input, resize_string, options.join(' '))
+            @context.registers[:services].image_resizer.resize(input, resize_string, convert_to, options.join(' '))
           end
 
         end
